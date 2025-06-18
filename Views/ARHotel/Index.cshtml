@@ -1,0 +1,88 @@
+﻿@page
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <title>Khách sạn 3D</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script src="https://jeromeetienne.github.io/AR.js/three.js/build/ar.min.js"></script>
+</head>
+<body>
+    <div id="arjs-video" style="width: 100%; height: 100vh;"></div>
+
+    <script>
+        // Khởi tạo AR.js
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(80, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.getElementById('arjs-video').appendChild(renderer.domElement);
+
+        // Khởi tạo AR context
+        const arToolkitSource = new THREEx.ArToolkitSource({
+            sourceType: 'webcam',
+        });
+        arToolkitSource.init(() => {
+            onResize();
+        });
+
+        const arToolkitContext = new THREEx.ArToolkitContext({
+            cameraParametersUrl: 'https://raw.githubusercontent.com/AR-js-org/AR.js/master/data/data/camera_para.dat',
+            detectionMode: 'mono',
+        });
+        arToolkitContext.init(() => {
+            camera.projectionMatrix.copy(arToolkitContext.getProjectionMatrix());
+        });
+
+        // Thêm Marker
+        const markerRoot = new THREE.Group();
+        scene.add(markerRoot);
+        const arMarkerControls = new THREEx.ArMarkerControls(arToolkitContext, markerRoot, {
+            type: 'pattern',
+            patternUrl: 'https://jeromeetienne.github.io/AR.js/data/data/patt.hiro',
+        });
+
+        // Tải mô hình khách sạn
+        const loader = new THREE.GLTFLoader();
+        loader.load(
+            '/bedroom.glb', // Sửa đường dẫn
+            (gltf) => {
+                const model = gltf.scene;
+                model.scale.set(0.1, 0.1, 0.1); // Thu nhỏ mô hình
+                model.position.set(0, 0, 0); // Đặt vị trí
+                markerRoot.add(model);
+                console.log('Mô hình tải thành công!');
+            },
+            undefined,
+            (error) => {
+                console.error('Lỗi tải mô hình:', error);
+            }
+        );
+
+        // Ánh sáng
+        const light = new THREE.AmbientLight(0xffffff, 1);
+        scene.add(light);
+
+        // Xử lý resize
+        function onResize() {
+            arToolkitSource.onResizeElement();
+            arToolkitSource.copyElementSizeTo(renderer.domElement);
+            if (arToolkitContext.arController !== null) {
+                arToolkitSource.copyElementSizeTo(arToolkitContext.arController.canvas);
+            }
+        }
+        window.addEventListener('resize', onResize);
+
+        // Render loop
+        function animate() {
+            requestAnimationFrame(animate);
+            arToolkitContext.update(arToolkitSource.domElement);
+            renderer.render(scene, camera);
+        }
+        animate();
+    </script>
+</body>
+</html>
