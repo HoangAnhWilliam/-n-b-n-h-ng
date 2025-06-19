@@ -41,7 +41,9 @@ namespace HotelBooking.Models
 
 		public string Image { get; set; }
 
-		[NotMapped]
+		public RatingModel Ratings { get; set; }
+
+        [NotMapped]
 		[FileExtension]
 		public IFormFile? ImageUpload { get; set; }
     }
