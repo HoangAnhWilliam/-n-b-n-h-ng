@@ -10,7 +10,9 @@ namespace HotelBooking.Repository
 
 		public DbSet<BrandModel> Brands { get; set; }
 
-		public DbSet<ProductModel> Products { get; set; }
+		public DbSet<SliderModel> Sliders { get; set; }
+
+        public DbSet<ProductModel> Products { get; set; }
 
 		public DbSet<RatingModel> Ratings { get; set; }
 
