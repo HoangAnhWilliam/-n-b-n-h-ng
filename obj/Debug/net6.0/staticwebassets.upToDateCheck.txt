@@ -87,3 +87,4 @@ wwwroot\media\products\c1bd82ff-1f3d-450a-bc68-e071bc5268e9_pexels-asphotograpy-
 wwwroot\media\products\d2280b99-9528-4851-a63d-0b0fac4b5766_pexels-kamenczak-775219.jpg
 wwwroot\media\products\d486f0ec-6629-4643-a6c0-0618503c73c2_Hotel2.jpg
 wwwroot\media\products\db958249-c5e9-42e5-9c86-17de5220f23d_Hotel1.jpg
+wwwroot\media\sliders\62ac7f08-539b-46f9-b76d-15f62a18dcc1_vojtech-bruzek-Yrxr3bsPdS0-unsplash.jpg

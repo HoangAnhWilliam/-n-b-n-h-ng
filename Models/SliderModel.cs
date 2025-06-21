@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using HotelBooking.Models.Validation;
 
 namespace HotelBooking.Models
 {
@@ -19,7 +20,7 @@ namespace HotelBooking.Models
         public string Image { get; set; }
 
         [NotMapped]
-        [FileExtensions]
+        [FileExtension]
         public IFormFile ImageUpload { get; set; }
     }
 }
