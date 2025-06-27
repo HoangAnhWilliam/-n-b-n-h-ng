@@ -1,0 +1,27 @@
+﻿@model IEnumerable<ContactModel>
+
+@if(Model != null && Model.Any())
+{
+	<div class="row">
+
+		@foreach (var item in Model)
+		{
+			<div class="col-sm-3">
+				<div class="companyinfo">
+					<p><img src="~/media/logo/@item.LogoImg" width="200px" height="120px" /></p>
+					<p>@Html.Raw(@item.Description)</p>
+				</div>
+			</div>
+			<div class="col-sm-5 col-md-5">
+				@Html.Raw(item.Map)
+			</div>
+			<div class="col-sm-4">
+				<div class="address">
+					<h5><b>Name : @item.Name</b></h5>
+					<h5>Email : @item.Email</h5>
+					<h5>@item.Phone</h5>
+				</div>
+			</div>
+		}
+	</div>
+}
